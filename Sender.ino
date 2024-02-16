@@ -28,7 +28,7 @@ void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
 
 void setup() {
   Serial.begin(115200);
-  
+
   WiFi.mode(WIFI_STA);
 
   if (esp_now_init() != ESP_OK) {
@@ -54,5 +54,4 @@ void setup() {
 void loop() {
   harish.bellPressed = digitalRead(DOORBELL);
   esp_err_t result = esp_now_send(0, (uint8_t *)&harish, sizeof(test_struct));
-  delay(2000);
 }
