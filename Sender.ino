@@ -1,16 +1,16 @@
-//Harish
+//Rashaad
 #include <esp_now.h>
 #include <WiFi.h>
 #define DOORBELL 19
 int bellPressed;
 // REPLACE WITH YOUR ESP RECEIVER'S MAC ADDRESS
-uint8_t broadcastAddress1[] = { 0xB0, 0xA7, 0x32, 0x2B, 0x4F, 0x18 };  //B0:A7:32:2B:4F:18
+uint8_t broadcastAddress1[] = { 0xD4, 0xD4, 0xDA, 0x5E, 0x2E, 0x40 };  //D4:D4:DA:5E:2E:40
 
 typedef struct test_struct {
   int bellPressed;
 } test_struct;
 
-test_struct harish;
+test_struct rashaad;
 
 esp_now_peer_info_t peerInfo;
 
@@ -52,6 +52,6 @@ void setup() {
 }
 
 void loop() {
-  harish.bellPressed = digitalRead(DOORBELL);
-  esp_err_t result = esp_now_send(0, (uint8_t *)&harish, sizeof(test_struct));
+  rashaad.bellPressed = digitalRead(DOORBELL);
+  esp_err_t result = esp_now_send(0, (uint8_t *)&rashaad, sizeof(test_struct));
 }
