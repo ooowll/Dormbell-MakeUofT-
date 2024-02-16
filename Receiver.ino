@@ -1,4 +1,4 @@
-//Rashaad
+//Harish
 #include <esp_now.h>
 #include <WiFi.h>
 bool bellState = false;
@@ -10,18 +10,18 @@ int bellPressed;
 } test_struct;
 
 //Create a struct_message called myData
-test_struct rashaad;
+test_struct harish;
 
 //callback function that will be executed when data is received
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
-  memcpy(&rashaad, incomingData, sizeof(rashaad));
+  memcpy(&harish, incomingData, sizeof(harish));
   // Serial.print("Bytes received: ");
   // Serial.println(len);
-  if(rashaad.bellPressed == 1 && bellState == false){
+  if(harish.bellPressed == 1 && bellState == false){
     bellState = true;
   Serial.print("\nOPEN NA NOOR!!!");
   }
- if(rashaad.bellPressed == 0 && bellState == true){
+ if(harish.bellPressed == 0 && bellState == true){
   bellState = false;
  }
 }
