@@ -1,11 +1,12 @@
 //Rashaad
 #include <esp_now.h>
 #include <WiFi.h>
-
+bool bellState = false;
 //Structure example to receive data
 //Must match the sender structure
 typedef struct test_struct {
 int bellPressed;
+
 } test_struct;
 
 //Create a struct_message called myData
@@ -14,11 +15,15 @@ test_struct rashaad;
 //callback function that will be executed when data is received
 void OnDataRecv(const uint8_t * mac, const uint8_t *incomingData, int len) {
   memcpy(&rashaad, incomingData, sizeof(rashaad));
-  Serial.print("Bytes received: ");
-  Serial.println(len);
-  Serial.print("Bell is: ");
-  Serial.println(rashaad.bellPressed);
-  Serial.println();
+  // Serial.print("Bytes received: ");
+  // Serial.println(len);
+  if(rashaad.bellPressed == 1 && bellState == false){
+    bellState = true;
+  Serial.print("\nOPEN NA NOOR!!!");
+  }
+ if(rashaad.bellPressed == 0 && bellState == true){
+  bellState = false;
+ }
 }
  
 void setup() {
