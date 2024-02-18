@@ -57,8 +57,8 @@ const int daylightOffset_sec = 3600;
 //callback function that will be executed when data is received
 void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len) {
   memcpy(&reciever, incomingData, sizeof(reciever));
-  Serial.print("Bytes received: ");
-  Serial.println(len);
+  // Serial.print("Bytes received: ");
+  // Serial.println(len);
   if (reciever.bellPressed == 1 && bellState == false) {
     bellState = true;
     Serial.print("\nOPEN NA NOOR!!!");
@@ -75,6 +75,17 @@ void OnDataRecv(const uint8_t *mac, const uint8_t *incomingData, int len) {
   if (reciever.bellPressed == 0 && bellState == true) {
     bellState = false;
   }
+
+  if(reciever.someoneAtDoor == true){
+    Serial.println("INTRUDER ALERT");
+    digitalWrite(FLASH, HIGH);
+    delay(250);
+    digitalWrite(FLASH, LOW);
+    digitalWrite(FLASH, HIGH);
+    delay(250);
+    digitalWrite(FLASH, LOW);
+  }
+
 }
 
 
