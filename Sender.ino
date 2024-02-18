@@ -82,17 +82,17 @@ void outputArray(int array[], int distanceArraySize) {
   Serial.print("\n");
 }
 
-bool isPersonPresent(int distanceArray[], int distanceArraySize, int currentAverage){
+bool isPersonPresent(int distanceArray[], int distanceArraySize, int currentAverage) {
   int zeroCounter = 0;
-  for (int i = 0; i < distanceArraySize; i++){
-    if (distanceArray[i] == 0){
+  for (int i = 0; i < distanceArraySize; i++) {
+    if (distanceArray[i] == 0) {
       zeroCounter++;
     }
   }
-  
-  if (distanceArraySize - zeroCounter > distanceArraySize / zeroTolerance && currentAverage < maxDistance)return true;
+
+  if (distanceArraySize - zeroCounter > distanceArraySize / zeroTolerance && currentAverage < maxDistance) return true;
   else return false;
-  }
+}
 
 // callback when data is sent
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
@@ -128,21 +128,21 @@ void setup() {
     return;
   }
 
-    pinMode(DOORBELL, INPUT_PULLDOWN);
-    pinMode(LEDGREEN, OUTPUT);
-    pinMode(LEDRED, OUTPUT);
+  pinMode(DOORBELL, INPUT_PULLDOWN);
+  pinMode(LEDGREEN, OUTPUT);
+  pinMode(LEDRED, OUTPUT);
 }
 
 void loop() {
   rashaad.bellPressed = digitalRead(DOORBELL);
   esp_err_t result = esp_now_send(0, (uint8_t *)&rashaad, sizeof(test_struct));
 
-  if(rashaad.bellPressed){
-  digitalWrite(LEDGREEN, HIGH);
-  digitalWrite(LEDRED, LOW);
-  } else{
-  digitalWrite(LEDGREEN, LOW);
-  digitalWrite(LEDRED, HIGH);
+  if (rashaad.bellPressed) {
+    digitalWrite(LEDGREEN, HIGH);
+    digitalWrite(LEDRED, LOW);
+  } else {
+    digitalWrite(LEDGREEN, LOW);
+    digitalWrite(LEDRED, HIGH);
   }
   //   put your main code here, to run repeatedly:
   // ULTRASONIC SENSOR
@@ -150,19 +150,18 @@ void loop() {
   int currentAverage;
   currentAverage = enqueueDistanceArrayAndReturnAverage(current_distance, distanceArraySize, distanceArrayPtr);
   outputArray(distanceArray, distanceArraySize);
-  if(isPersonPresent(distanceArray, distanceArraySize, currentAverage)){
+  if (isPersonPresent(distanceArray, distanceArraySize, currentAverage)) {
     //person is at door
     Serial.print("Person at door\n");
     rashaad.someoneAtDoor = true;
-  }
-  else{// person is not at door
-  Serial.print("Person not at door\n");
-  rashaad.someoneAtDoor = false;
+  } else {  // person is not at dooer
+    Serial.print("Person not at door\n");
+    rashaad.someoneAtDoor = false;
   }
   delay(readInterval);
-  if (distanceArray[distanceArraySize-1] == 0) timeSinceLast += ((float)readInterval)/1000;
+  if (distanceArray[distanceArraySize - 1] == 0) timeSinceLast += ((float)readInterval) / 1000;
   else timeSinceLast = 0;
   Serial.print("Time Since Last: ");
   Serial.print(timeSinceLast);
   Serial.print(" seconds\n");
-  }
+}
